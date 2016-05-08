@@ -68,7 +68,7 @@ try {
              $count = count($tmp);
              $slice = array_slice($tmp, $count - 3);
              if ($measurement == 'VC') {
-                 $result->setVC($slice);
+                 $result->setVcIN($slice);
              } else if ($measurement == 'FEV') {
                 if ($count > 7) {
                    $result->setFev1VCMax($slice);
