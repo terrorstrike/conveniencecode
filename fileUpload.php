@@ -35,8 +35,11 @@ try {
         $response['error'] = false;
         
         // Get the contents of the pdf as a string
-        $contents = PDFParser::parseFile($target_path);
-        
+        $output = "";
+        $pdfToTextCmd = "pdftotext -layout '" . $target_path . "' testText";
+        exec($pdfToTextCmd, $output);
+        //$contents = PDFParser::parseFile($target_path);
+        $contents = "";
         // Split on delimiter chars
         $delimiterPattern = '/[:\R\t]/'; 
         $parts = preg_split($delimiterPattern, $contents);
@@ -52,7 +55,7 @@ try {
              }
         } 
 
-        file_put_contents($TEST_FILE, $parts_array);
+        //file_put_contents($TEST_FILE, $contents);
     }
           
 } catch (Exception $e) {
