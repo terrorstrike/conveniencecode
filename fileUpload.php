@@ -83,8 +83,17 @@ try {
                 $result['PEF'] = $slice;
              }
         }
-
-        var_dump($result);        
+        
+        $result['FVC'] = ($result['FVC'] / 10.0) > 100 ? 100 : $result['FVC'] / 10.0;
+        $result['Fev1'] = ($result['Fev1'] / 10.0) > 100 ? 100 : $result['Fev1'] / 10.0;
+        $result['Fev1FVC'] = ($result['Fev1'] / $result['FVC']) > 1 ? 1 : ($result['Fev1'] / $result['FVC']);
+        $result['PEF'] = ($result['PEF'] / 10.0) > 100 ? 100 : ($result['PEF'] / 10.0);
+        
+        $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
+        $matlabCommand = "matlab -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value)';
+        $cmdOutput = "";
+        exec($matlabCommand, $cmdOutput);
+        var_dump($cmdOutput);
     }
           
 } catch (Exception $e) {
