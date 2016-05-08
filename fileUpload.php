@@ -29,7 +29,7 @@ try {
         $response['message'] = 'File uploaded successfully!';
         $response['error'] = false;
  
-        $contents = PDFParser::parseFile($_FILES['image']['tmp_name']);
+        $contents = PDFParser::parseFile($target_path);
         file_put_contents('tmpTxt', $contents);  
     }
           
