@@ -40,21 +40,25 @@ try {
         $contents = file_get_contents($TEST_FILE);
         
         // Split on delimiter chars
-        $delimiterPattern = '/[:\R\t]/'; 
+        $delimiterPattern = '/[:\n\t]/'; 
         $parts = preg_split($delimiterPattern, $contents);
         $partsTable = explode("\n", substr($contents, strpos($contents, $TABLE_BEGIN_INDEX_STRING)));
-        
         // Prepare for parsing
         $parts_array = array();
-
-        foreach ($partsTable as $part) {
-             array_push($parts_array, $part);
-             if (strpos($part, "Date") !== false) {
-                 break;
+        $index = -1;
+        $offset = 8;
+        for($i = 0; $i < count($partsTable); $i++) {
+             if (strpos($partsTable[$i], $TABLE_BEGIN_INDEX_STRING) !== false ) {
+                 $index = $i;
+                 $break;
              }
         } 
-
-        file_put_contents($TEST_FILE_1, $parts_array);
+        for($j = $index + 1; $j <= $offset; $j++){
+             array_push($parts_array, $partsTable[$j]);
+        }
+       
+        // $parts_array now contains measurement_table which should now be parsed
+        
     }
           
 } catch (Exception $e) {

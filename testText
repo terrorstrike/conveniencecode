@@ -2,12 +2,12 @@ CareFusion Germany 234 GmbH
 Leibnizstrasse 7
 97204 Hoechberg, Germany
 
-Last Name:             TEst                                   Identification:   TEST2
-First Name:            TeST
+Last Name:             Testpatient                            Identification:   TESTPATIENT
+First Name:            Testpatient
 
-Date of Birth:         18.01.1960                             Age:              36 Years
+Date of Birth:         18.01.1969                             Age:              35 Years
 Sex:                   male                                   Height:           187,0 cm
-                                                              Weight:           90,0 kg
+                                                              Weight:           95,0 kg
 
 
 
@@ -26,7 +26,7 @@ Fluß / Volumen - Messung
 
                                                                                             Vol [L]
   0
-                   1              2          3            4                 5       6             7
+                   1                 2       3            4                 5       6             7
 
 
 
@@ -43,14 +43,14 @@ Fluß / Volumen - Messung
 
 
                                                   Pred                  Act1      % Soll
-VC IN                              [L]            4.51                  6.21       137.8
-FVC                                [L]            4.33                  6.10       140.8
-FEV 1                              [L]            3.48                  4.72       135.5
-FEV 1 % VC MAX                     [%]           76.85                 76.01        96.6
-PEF                              [L/s]            8.60                 10.42       121.2
-MEF 75                           [L/s]            7.52                  8.50       113.0
-MEF 50                           [L/s]            4.63                  4.98       107.4
-MEF 25                           [L/s]            1.85                  2.43        77.5
+VC IN                             [L]             4.51                  6.21       137.8
+FVC                               [L]             4.33                  6.10       140.8
+FEV 1                             [L]             3.48                  4.72       135.5
+FEV 1 % VC MAX                    [%]            77.85                 76.01        97.6
+PEF                             [L/s]             8.60                 10.42       121.2
+MEF 75                          [L/s]             7.52                  8.50       113.0
+MEF 50                          [L/s]             4.63                  4.98       107.4
+MEF 25                          [L/s]             1.85                  1.43        77.5
 
 
 Date                                                           04.02.04
@@ -58,7 +58,7 @@ Time                                                           10:07:12
 
 
 
-Mitarbeit: ( ) gut            ( ) mittel   ( ) schlecht
+Mitarbeit: ( ) gut           ( ) mittel    ( ) schlecht
 
 Suspected peripheral airway obstruction.
 Suspected extrathoracic stenosis.
