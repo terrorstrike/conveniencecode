@@ -1,5 +1,5 @@
 <?php
-include('PDFParser.php');
+//include('PDFParser.php');
 // Path to move uploaded files
 $target_path = "uploads/";
  
@@ -30,8 +30,8 @@ if (isset($_FILES['image']['name'])) {
         $response['error'] = false;
         $response['file_path'] = $file_upload_url . basename($_FILES['image']['name']);
         
-        $contents = PDFParser::parseFile($target_path);
-        file_put_contents('tmpTxt', $contents);    
+        //$contents = PDFParser::parseFile($target_path);
+        //file_put_contents('tmpTxt', $contents);    
 } catch (Exception $e) {
         // Exception occurred. Make error flag true
         $response['error'] = true;
