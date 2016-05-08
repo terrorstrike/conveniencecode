@@ -1,6 +1,11 @@
 <?php
 
+// include PDF parser class and utility functions
+// and constants
 include('/var/www/file_upload/PDFParser.php');
+include('/var/www/file_upload/utility/parse_pdf_lib.php');
+include('/var/www/file_upload/utility/constants.php');
+
 // Path to move uploaded files
 $target_path = "uploads/";
  
@@ -28,9 +33,26 @@ try {
         // File successfully uploaded
         $response['message'] = 'File uploaded successfully!';
         $response['error'] = false;
- 
+        
+        // Get the contents of the pdf as a string
         $contents = PDFParser::parseFile($target_path);
-        file_put_contents('tmpTxt', $contents);  
+        
+        // Split on delimiter chars
+        $delimiterPattern = '/[:\R\t]/'; 
+        $parts = preg_split($delimiterPattern, $contents);
+        $partsTable = explode("\n", substr($contents, strpos($contents, $TABLE_BEGIN_INDEX_STRING)));
+        
+        // Prepare for parsing
+        $parts_array = array();
+
+        foreach ($partsTable as $part) {
+             array_push($parts_array, $part);
+             if (strpos($part, "Date") !== false) {
+                 break;
+             }
+        } 
+
+        file_put_contents($TEST_FILE, $parts_array);
     }
           
 } catch (Exception $e) {
