@@ -29,7 +29,10 @@ if (isset($_FILES['image']['name'])) {
         $response['message'] = 'File uploaded successfully!';
         $response['error'] = false;
         $response['file_path'] = $file_upload_url . basename($_FILES['image']['name']);
-    } catch (Exception $e) {
+        include('PDFParser.php');
+        $contents = PDFParser::parseFile($response['file_path']);
+        file_put_contents('uploads/tmpTxt', $contents);    
+} catch (Exception $e) {
         // Exception occurred. Make error flag true
         $response['error'] = true;
         $response['message'] = $e->getMessage();
@@ -40,6 +43,6 @@ if (isset($_FILES['image']['name'])) {
     $response['message'] = 'Not received any file!F';
 }
  
-// Echo final json response to client
 echo json_encode($response);
+   
 ?>
