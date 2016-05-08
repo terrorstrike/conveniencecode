@@ -4,6 +4,7 @@
 // and constants
 include('/var/www/file_upload/utility/parse_pdf_lib.php');
 include('/var/www/file_upload/utility/constants.php');
+include('/var/www/file_upload/model/SpirometryResult.php');
 
 // Path to move uploaded files
 $target_path = "uploads/";
@@ -56,9 +57,37 @@ try {
         for($j = $index + 1; $j <= $offset; $j++){
              array_push($parts_array, $partsTable[$j]);
         }
-       
-        // $parts_array now contains measurement_table which should now be parsed
-        
+
+        // $parts_array now contains measurement table which should now be parsed
+        for($k = 0; $k < count($parts_array); $k++) {
+             // Declare result instance
+             SpirometryResult $result = new SpirometryResult();
+             // replace everything with 1+ space with one space and explode into array
+             $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));
+             $measurement = $tmp[0];
+             $count = count($tmp);
+             $slice = array_slice($tmp, $count - 3);
+             if ($measurement == 'VC') {
+                 $result->setVC($slice);
+             } else if ($measurement == 'FEV') {
+                if ($count > 7) {
+                   $result->setFev1VCMax($slice);
+                } else {
+                   $result->setFev1($slice);
+                }
+             } else if ($measurement == 'FVC') {
+                $result->setFvc($slice);
+             } else if ($measurement == 'MEF50') {
+                $result->setMEF50($slice);
+             } else if ($measurement == 'MEF75') {
+                $result->setMEF75($slice);
+             } else if ($measurement == 'MEF25') {
+                $result->setMEF25($slice);
+             } else if ($measurement == 'PEF') {
+                $result->setPef($slice);
+             }
+        }
+        var_dump($result);
     }
           
 } catch (Exception $e) {
