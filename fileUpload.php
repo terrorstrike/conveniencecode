@@ -1,8 +1,7 @@
 <?php
 
-// include PDF parser class and utility functions
+// include utility functions
 // and constants
-include('/var/www/file_upload/PDFParser.php');
 include('/var/www/file_upload/utility/parse_pdf_lib.php');
 include('/var/www/file_upload/utility/constants.php');
 
@@ -38,8 +37,8 @@ try {
         $output = "";
         $pdfToTextCmd = "pdftotext -layout '" . $target_path . "' testText";
         exec($pdfToTextCmd, $output);
-        //$contents = PDFParser::parseFile($target_path);
-        $contents = "";
+        $contents = file_get_contents($TEST_FILE);
+        
         // Split on delimiter chars
         $delimiterPattern = '/[:\R\t]/'; 
         $parts = preg_split($delimiterPattern, $contents);
@@ -55,7 +54,7 @@ try {
              }
         } 
 
-        //file_put_contents($TEST_FILE, $contents);
+        file_put_contents($TEST_FILE_1, $contents);
     }
           
 } catch (Exception $e) {
