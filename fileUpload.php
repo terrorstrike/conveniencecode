@@ -59,37 +59,32 @@ try {
         }
 
         // $parts_array now contains measurement table which should now be parsed
+        $result = []; 
         for($k = 0; $k < count($parts_array); $k++) {
-             // Declare result instance
-             $result = new SpirometryResult();
              // replace everything with 1+ space with one space and explode into array
-             $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));
-             var_dump($tmp);             
-$measurement = $tmp[0];
+             $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));            
+             $measurement = $tmp[0];
              $count = count($tmp);
-             $slice = array_slice($tmp, $count - 3);
-             var_dump($slice);             
-if ($measurement == 'VC') {
-                 $result->setVcIN($slice);
-             } else if ($measurement == 'FEV') {
+             $slice = array_slice($tmp, $count - 3);             
+             if ($measurement === 'VC') {
+                 $result['VcIN'] = $slice;
+             } else if ($measurement === 'FEV') {
                 if ($count > 7) {
-                   $result->setFev1VCMax($slice);
+                   $result['Fev1VcMax'] = $slice;
                 } else {
-                   $result->setFev1($slice);
+                   $result['Fev1'] = $slice;
                 }
-             } else if ($measurement == 'FVC') {
-                $result->setFvc($slice);
-             } else if ($measurement == 'MEF50') {
-                $result->setMEF50($slice);
-             } else if ($measurement == 'MEF75') {
-                $result->setMEF75($slice);
-             } else if ($measurement == 'MEF25') {
-                $result->setMEF25($slice);
-             } else if ($measurement == 'PEF') {
-                $result->setPef($slice);
+             } else if ($measurement === 'FVC') {
+                $result['FVC'] = $slice;
+             } else if ($measurement === 'MEF') {
+                $key = $tmp[0] . $tmp[1];                
+                $result[$key] = $slice;
+             } else if ($measurement === 'PEF') {
+                $result['PEF'] = $slice;
              }
         }
-        var_dump($result->getMEF25());
+
+        var_dump($result);        
     }
           
 } catch (Exception $e) {
