@@ -30,7 +30,7 @@ try {
         $response['error'] = false;
  
         $contents = PDFParser::parseFile($_FILES['image']['tmp_name']);
-        file_put_contents('/var/www/file_upload/uploads/tmpTxt', $contents);  
+        file_put_contents('tmpTxt', $contents);  
     }
           
 } catch (Exception $e) {
