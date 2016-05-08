@@ -54,7 +54,7 @@ try {
              }
         } 
 
-        file_put_contents($TEST_FILE_1, $contents);
+        file_put_contents($TEST_FILE_1, $parts_array);
     }
           
 } catch (Exception $e) {
