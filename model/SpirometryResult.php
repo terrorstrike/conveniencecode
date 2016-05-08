@@ -17,17 +17,6 @@ class SpirometryResult {
 
 	}
 
-    function __construct($vcIN, $fvc, $fev1, $fev1VCMax, $PEF, $MEF75, $MEF50, $MEF25) {
-       $this->$vcIN = $vcIN;
-       $this->$fvc = $fvc;
-       $this->$fev1 = $fev1;
-       $this->$fev1VCMax = $fev1VCMax;
-       $this->$PEF = $PEF;
-       $this->$MEF75 = $MEF75;
-       $this->$MEF50 = $MEF50;
-       $this->$MEF25 = $MEF25;
-   }
-
    // Getters
 
    function getVcIN() {
