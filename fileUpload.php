@@ -28,7 +28,7 @@ try {
         // File successfully uploaded
         $response['message'] = 'File uploaded successfully!';
         $response['error'] = false;
-        $response['file_path'] = $file_upload_url . basename($_FILES['image']['name']);
+        //$response['file_path'] = $file_upload_url . basename($_FILES['image']['name']);
             
         $contents = PDFParser::parseFile('/var/www/file_upload/' . $target_path);
         file_put_contents('/var/www/file_upload/uploads/tmpTxt', $contents);  
