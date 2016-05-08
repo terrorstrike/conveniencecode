@@ -1,5 +1,6 @@
 <?php
-//include('PDFParser.php');
+
+include('/var/www/file_upload/PDFParser.php');
 // Path to move uploaded files
 $target_path = "uploads/";
  
@@ -17,21 +18,22 @@ if (isset($_FILES['image']['name'])) {
     $response['email'] = $email;
     $response['website'] = $website;
  
-    try {
-        // Throws exception incase file is not being moved
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-            // make error flag true
-            $response['error'] = true;
-            $response['message'] = 'Could not move the file!';
-        }
- 
+try {
+    // Throws exception incase file is not being moved
+    if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
+        // make error flag true
+        $response['error'] = true;
+        $response['message'] = 'Could not move the file!';
+    } else {
         // File successfully uploaded
         $response['message'] = 'File uploaded successfully!';
         $response['error'] = false;
         $response['file_path'] = $file_upload_url . basename($_FILES['image']['name']);
-        
-        //$contents = PDFParser::parseFile($target_path);
-        //file_put_contents('tmpTxt', $contents);    
+            
+        $contents = PDFParser::parseFile('/var/www/file_upload/' . $target_path);
+        file_put_contents('/var/www/file_upload/uploads/tmpTxt', $contents);  
+    }
+          
 } catch (Exception $e) {
         // Exception occurred. Make error flag true
         $response['error'] = true;
