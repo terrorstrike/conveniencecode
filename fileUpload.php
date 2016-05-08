@@ -64,10 +64,12 @@ try {
              $result = new SpirometryResult();
              // replace everything with 1+ space with one space and explode into array
              $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));
-             $measurement = $tmp[0];
+             var_dump($tmp);             
+$measurement = $tmp[0];
              $count = count($tmp);
              $slice = array_slice($tmp, $count - 3);
-             if ($measurement == 'VC') {
+             var_dump($slice);             
+if ($measurement == 'VC') {
                  $result->setVcIN($slice);
              } else if ($measurement == 'FEV') {
                 if ($count > 7) {
@@ -87,7 +89,7 @@ try {
                 $result->setPef($slice);
              }
         }
-        var_dump($result);
+        var_dump($result->getMEF25());
     }
           
 } catch (Exception $e) {
