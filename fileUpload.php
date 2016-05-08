@@ -61,7 +61,7 @@ try {
         // $parts_array now contains measurement table which should now be parsed
         for($k = 0; $k < count($parts_array); $k++) {
              // Declare result instance
-             SpirometryResult $result = new SpirometryResult();
+             $result = new SpirometryResult();
              // replace everything with 1+ space with one space and explode into array
              $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));
              $measurement = $tmp[0];
