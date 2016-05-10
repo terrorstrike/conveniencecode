@@ -89,7 +89,7 @@ try {
         $result['PEF'] = (floatval($result['PEF']) / 10.0) > 100 ? 100 : (floatval($result['PEF']) / 10.0);
         
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
-        $matlabCommand = "matlab -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value);';
+        $matlabCommand = "matlab -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value);' . "'";
         $cmdOutput = "";
         exec($matlabCommand, $cmdOutput);
         var_dump($cmdOutput);
