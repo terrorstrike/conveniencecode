@@ -61,9 +61,11 @@ try {
         $result = []; 
         for($k = 0; $k < count($parts_array); $k++) {
              // replace everything with 1+ space with one space and explode into array
-             $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));            
+             $tmp = explode(' ', preg_replace('/ +/', ' ', $parts_array[$k]));
+             // put found measurements in an object
              $measurement = $tmp[0];
              $count = count($tmp);
+             // get part of table that has measurements
              $slice = array_slice($tmp, $count - 3);             
              if ($measurement === 'VC') {
                  $result['VcIN'] = $slice;
@@ -83,16 +85,20 @@ try {
              }
         }
         
+        // normalize values
         $result['FVC'] = (floatval($result['FVC']) / 10.0) > 100 ? 100 : floatval($result['FVC']) / 10.0;
         $result['Fev1'] = (floatval($result['Fev1']) / 10.0) > 100 ? 100 : floatval($result['Fev1']) / 10.0;
         $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC'])) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
         $result['PEF'] = (floatval($result['PEF']) / 10.0) > 100 ? 100 : (floatval($result['PEF']) / 10.0);
         
+        // execute matlab commands
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
-        $matlabCommand = "matlab -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value);' . "'";
+        $matlabCommand = "/home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value);' . "'";
         $cmdOutput = "";
         exec($matlabCommand, $cmdOutput);
         var_dump($cmdOutput);
+
+        // send email report
     }
           
 } catch (Exception $e) {
