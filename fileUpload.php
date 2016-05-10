@@ -93,7 +93,7 @@ try {
         
         // execute matlab commands
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
-        $matlabCommand = "/home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay 'SPIR_Fuzzy=readfis(" . '"SPIR-Fuzzy.fis"); value=evalfis(' . $inputVector . ', SPIR_Fuzzy); disp(value);' . "'";
+        $matlabCommand = 'echo apach3T3mp | /usr/bin/sudo -S /home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay "SPIR_Fuzzy=readfis(' . "'SPIR-Fuzzy');value=evalfis(" . $inputVector . ",SPIR_Fuzzy);disp(value);" . '"';
         $cmdOutput = "";
         exec($matlabCommand, $cmdOutput);
         var_dump($cmdOutput);
