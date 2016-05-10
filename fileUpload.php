@@ -2,7 +2,7 @@
 
 // include utility functions
 // and constants
-include('/var/www/file_upload/utility/parse_pdf_lib.php');
+include('/var/www/file_upload/utility/utility.php');
 include('/var/www/file_upload/utility/constants.php');
 
 // Path to move uploaded files
@@ -86,19 +86,31 @@ try {
         }
         
         // normalize values
-        $result['FVC'] = (floatval($result['FVC']) / 10.0) > 100 ? 100 : floatval($result['FVC']) / 10.0;
-        $result['Fev1'] = (floatval($result['Fev1']) / 10.0) > 100 ? 100 : floatval($result['Fev1']) / 10.0;
+        $result['FVC'] = (floatval($result['FVC'][2]) / 100.0) > 100 ? 100 : floatval($result['FVC'][2]) / 100.0;
+        $result['Fev1'] = (floatval($result['Fev1'][2]) / 100.0) > 100 ? 100 : floatval($result['Fev1'][2]) / 100.0;
         $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC'])) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
-        $result['PEF'] = (floatval($result['PEF']) / 10.0) > 100 ? 100 : (floatval($result['PEF']) / 10.0);
+        $result['PEF'] = (floatval($result['PEF'][2]) / 100.0) > 100 ? 100 : (floatval($result['PEF'][2]) / 100.0);
         
         // execute matlab commands
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
         $matlabCommand = 'echo apach3T3mp | /usr/bin/sudo -S /home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay "SPIR_Fuzzy=readfis(' . "'SPIR-Fuzzy');value=evalfis(" . $inputVector . ",SPIR_Fuzzy);disp(value);" . '"';
         $cmdOutput = "";
         exec($matlabCommand, $cmdOutput);
-        var_dump($cmdOutput);
+        
+        if (isset($cmdOutput) && !empty($cmdOutput)) {
+            $value = floatval(trim($cmdOutput[10]));
+            $diagnose_value = 0;
 
-        // send email report
+            if (abs($value - 0.1) < $EPS) $diagnose_value = 1;
+            if (abs($value - 0.35) < $EPS) $diagnose_value = 2;
+            if (abs($value - 0.6) < $EPS) $diagnose_value = 3;
+            if (abs($value - 0.85) < $EPS) $diagnose_value = 4;
+            var_dump($diagnose_value);
+            $state = $DIAGNOSIS_VALUES[$diagnose_value];
+            // send email report
+            send_email('spirometry-results@spirometry.ba', 'eldar32@gmail.com', 'Your results', 'The state of your lungs is: ' . $state );
+        }
+        
     }
           
 } catch (Exception $e) {
