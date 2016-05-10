@@ -85,7 +85,7 @@ try {
         
         $result['FVC'] = (floatval($result['FVC']) / 10.0) > 100 ? 100 : floatval($result['FVC']) / 10.0;
         $result['Fev1'] = (floatval($result['Fev1']) / 10.0) > 100 ? 100 : floatval($result['Fev1']) / 10.0;
-        $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC']) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
+        $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC'])) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
         $result['PEF'] = (floatval($result['PEF']) / 10.0) > 100 ? 100 : (floatval($result['PEF']) / 10.0);
         
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
