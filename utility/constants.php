@@ -13,6 +13,6 @@ $DIAGNOSIS_VALUES = [
     'Severe'
 ];
 $EMAIL = "spirometrysystem@gmail.com";
-$MAIL_PW = "spyrometry";
+$MAIL_PW = "spirometry";
 
 ?>
