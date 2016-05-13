@@ -14,7 +14,7 @@ function send_email($from, $to, $subject, $text) {
 	$mail->Host = 'smtp.mailgun.org';                     // Specify main and backup SMTP servers
 	$mail->SMTPAuth = true;                               // Enable SMTP authentication
 	$mail->Username = 'postmaster@sandbox2904d7336bb443559e446612dbc8f616.mailgun.org';   // SMTP username
-	$mail->Password = '6d71484f2c739e7eb64f314efab6ce09  ';                           // SMTP password
+	$mail->Password = '6d71484f2c739e7eb64f314efab6ce09';                           // SMTP password
 	$mail->SMTPSecure = 'tls';                            // Enable encryption, only 'tls' is accepted
 
 	$mail->From = $from;
