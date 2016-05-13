@@ -1,6 +1,6 @@
 <?php
 
-$TABLE_BEGIN_INDEX_STRING = "Pred                  Act1      % Soll";
+$TABLE_BEGIN_INDEX_STRING = "                                                  Pred                  Act1      % Soll";
 $TEST_FILE = "/var/www/file_upload/testText";
 $TEST_FILE_1 = "/var/www/file_upload/testString";
 $MAILGUN_API_KEY = "api:key-2cf78ac777f8bbb038017d7dd35104b3";
