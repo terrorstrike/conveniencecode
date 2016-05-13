@@ -85,25 +85,25 @@ try {
                 $result['PEF'] = $slice;
              }
         }
-        var_dump($result);
+
         // normalize values
-        $result['FVC'] = (floatval($result['FVC'][2]) / 100.0) > 100 ? 100 : floatval($result['FVC'][2]) / 100.0;
-        $result['Fev1'] = (floatval($result['Fev1'][2]) / 100.0) > 100 ? 100 : floatval($result['Fev1'][2]) / 100.0;
+        $result['FVC'] = (floatval($result['FVC'][2])) > 100 ? 100 : floatval($result['FVC'][2]);
+        $result['Fev1'] = (floatval($result['Fev1'][2])) > 100 ? 100 : floatval($result['Fev1'][2]);
         $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC'])) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
-        $result['PEF'] = (floatval($result['PEF'][2]) / 100.0) > 100 ? 100 : (floatval($result['PEF'][2]) / 100.0);
-        var_dump($result);
+        $result['PEF'] = (floatval($result['PEF'][2])) > 100 ? 100 : (floatval($result['PEF'][2]));
         // execute matlab commands
+        // 
         $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
-        var_dump($inputVector);
-        $matlabCommand = 'echo apach3T3mp | /usr/bin/sudo -S /home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay "SPIR_Fuzzy=readfis(' . "'SPIR-Fuzzy');value=evalfis(" . $inputVector . ",SPIR_Fuzzy);disp(value);disp(SPIR_Fuzzy);" . '"';
+
+        $matlabCommand = 'echo apach3T3mp | /usr/bin/sudo -S /home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay "SPIR_Fuzzy=readfis(' . "'SPIR-Fuzzy');value=evalfis(" . $inputVector . ",SPIR_Fuzzy);disp(value);" . '"';
         $cmdOutput = "";
         exec($matlabCommand, $cmdOutput);
         var_dump($cmdOutput);
         if (isset($cmdOutput) && !empty($cmdOutput)) {
             $value = floatval(trim($cmdOutput[10]));
             var_dump($value);
-            var_dump($EPS);
-            $diagnose_value = 0;
+
+            $diagnose_value = 4;
 
             if (abs($value - 0.1) < $EPS) $diagnose_value = 1;
             if (abs($value - 0.35) < $EPS) $diagnose_value = 2;
