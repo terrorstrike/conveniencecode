@@ -41,11 +41,16 @@ try {
         
         // Split on delimiter chars
         $delimiterPattern = '/[:\n\t]/'; 
-        $parts = preg_split($delimiterPattern, $contents);
-        $partsTable = explode("\n", substr($contents, strpos($contents, $TABLE_BEGIN_INDEX_STRING)));
+        //$parts = preg_split($delimiterPattern, $contents);
+        $parts = explode('\n', $contents);
+        $index = -1;
+        //$partsTable = explode("\n", substr($contents, strpos($contents, $TABLE_BEGIN_INDEX_STRING)));
+        if(preg_match("/ *Pred +Act1 +% + Sol1/", $contents, $matches, PREG_OFFSET_CAPTURE)) {
+            $index = $matches[0][1];
+            var_dump($matches);
+        }
         // Prepare for parsing
         $parts_array = array();
-        $index = -1;
         $offset = 8;
         for($i = 0; $i < count($partsTable); $i++) {
              if (strpos($partsTable[$i], $TABLE_BEGIN_INDEX_STRING) !== false ) {
@@ -53,11 +58,11 @@ try {
                  $break;
              }
         } 
-        var_dump($partsTable);
+
         for($j = $index + 1; $j <= $offset; $j++){
              array_push($parts_array, $partsTable[$j]);
         }
-        var_dump($parts_array);
+
         // $parts_array now contains measurement table which should now be parsed
         $result = []; 
         for($k = 0; $k < count($parts_array); $k++) {
