@@ -16,8 +16,8 @@ function send_email($from, $to, $subject, $text) {
 	$mail->Host = "smtp.gmail.com";
 	$mail->Port = 465; // or 587
 	$mail->IsHTML(true);
-	$mail->Username = $EMAIL;
-	$mail->Password = $MAIL_PW;
+	$mail->Username = 'spirometrysystem@gmail.com';
+	$mail->Password = 'spyrometry';
 	$mail->SetFrom($from);
 	$mail->Subject = $subject;
 	$mail->Body = $text;
