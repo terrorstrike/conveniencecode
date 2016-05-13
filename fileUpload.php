@@ -45,8 +45,9 @@ try {
         $parts = explode('\n', $contents);
         $index = -1;
         //$partsTable = explode("\n", substr($contents, strpos($contents, $TABLE_BEGIN_INDEX_STRING)));
-        if(preg_match("/ *Pred +Act1 +% + Sol1/", $contents, $matches, PREG_OFFSET_CAPTURE)) {
+        if(preg_match("/ *Pred +Act1 +% +Soll/", $contents, $matches, PREG_OFFSET_CAPTURE)) {
             $index = $matches[0][1];
+            var_dump($index);
             var_dump($matches);
         }
         // Prepare for parsing
@@ -115,7 +116,7 @@ try {
             if (abs($value - 0.6) < $EPS) $diagnose_value = 3;
             if (abs($value - 0.85) < $EPS) $diagnose_value = 4;
             var_dump($diagnose_value);
-            $state = $DIAGNOSIS_VALUES[$diagnose_value];
+            $state = $DIAGNOSIS_VALUES[$diagnose_value - 1];
             // send email report
             send_email('spirometry-results@spirometry.ba', 'eldar32@gmail.com', 'Your results', 'The state of your lungs is: ' . $state );
         }
