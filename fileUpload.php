@@ -7,21 +7,21 @@ include('/var/www/file_upload/utility/constants.php');
 
 // Path to move uploaded files
 $target_path = "uploads/";
- 
+
 // array for final json respone
 $response = array();
-  
+
 if (isset($_FILES['image']['name'])) {
     $target_path = $target_path . basename($_FILES['image']['name']);
- 
+
     // reading other post parameters
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $website = isset($_POST['website']) ? $_POST['website'] : '';
- 
+
     $response['file_name'] = basename($_FILES['image']['name']);
     $response['email'] = $email;
     $response['website'] = $website;
- 
+
 try {
     // Throws exception incase file is not being moved
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
@@ -35,9 +35,9 @@ try {
         $pdfToTextCmd = "pdftotext -layout '" . $target_path . "' testText";
         exec($pdfToTextCmd, $output);
         $contents = file_get_contents($TEST_FILE);
-        
+
         // Split on delimiter chars
-        $delimiterPattern = '/[:\n\t]/'; 
+        $delimiterPattern = '/[:\n\t]/';
         //$parts = preg_split($delimiterPattern, $contents);
         $parts = explode('\n', $contents);
         $index = -1;
@@ -67,7 +67,7 @@ try {
                  $measurement = $tmp[0];
                  $count = count($tmp);
                  // get part of table that has measurements
-                 $slice = array_slice($tmp, $count - 3);             
+                 $slice = array_slice($tmp, $count - 3);
                  if ($measurement === 'VC') {
                      $result['VcIN'] = $slice;
                  } else if ($measurement === 'FEV') {
@@ -79,7 +79,7 @@ try {
                  } else if ($measurement === 'FVC') {
                     $result['FVC'] = $slice;
                  } else if ($measurement === 'MEF') {
-                    $key = $tmp[0] . $tmp[1];                
+                    $key = $tmp[0] . $tmp[1];
                     $result[$key] = $slice;
                  } else if ($measurement === 'PEF') {
                     $result['PEF'] = $slice;
@@ -92,7 +92,7 @@ try {
             $result['Fev1FVC'] = (floatval($result['Fev1']) / floatval($result['FVC'])) > 1 ? 1 : (floatval($result['Fev1']) / floatval($result['FVC']));
             $result['PEF'] = (floatval($result['PEF'][2])) > 100 ? 100 : (floatval($result['PEF'][2]));
             // execute matlab commands
-            // 
+            //
             $inputVector = "[" . $result['FVC'] . "," . $result['Fev1'] . "," . $result['Fev1FVC'] . "," . $result['PEF'] . "]";
 
             $matlabCommand = 'echo apach3T3mp | /usr/bin/sudo -S /home/eldar/Desktop/MatlabInstall/bin/glnxa64/MATLAB -r -nodisplay "SPIR_Fuzzy=readfis(' . "'SPIR-Fuzzy');value=evalfis(" . $inputVector . ",SPIR_Fuzzy);disp(value);" . '"';
@@ -121,9 +121,9 @@ try {
             $response['error'] = true;
             $response['message'] = 'Invalid file sent!';
         }
-        
+
     }
-          
+
 } catch (Exception $e) {
         // Exception occurred. Make error flag true
         $response['error'] = true;
@@ -132,9 +132,9 @@ try {
 } else {
     // File parameter is missing
     $response['error'] = true;
-    $response['message'] = 'Not received any file!F';
+    $response['message'] = 'No file has been received!';
 }
- 
+
 echo json_encode($response);
-   
+
 ?>
